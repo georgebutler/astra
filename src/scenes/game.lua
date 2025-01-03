@@ -1,25 +1,28 @@
-local game = {}
+local Scene = require("engine.scene")
+local World = require("engine.world")
 
-function game.init(manager)
-    game.sceneManager = manager
+local Game = setmetatable({}, { __index = Scene })
+Game.__index = Game
+
+function Game.new(sceneManager)
+	local self = setmetatable(Scene.new(sceneManager), Game)
+	self.world = World.new()
+
+	return self
 end
 
-function game.load()
-    print("Game Loaded")
+function Game:update(dt)
+	self.world:update(dt)
 end
 
-function game.update(dt)
-    -- Game update logic
+function Game:draw()
+	self.world:draw()
 end
 
-function game.draw()
-    love.graphics.print("Game is Running", 400, 300)
+function Game:keypressed(key)
+	if key == "escape" then
+		self.sceneManager:switch("menu")
+	end
 end
 
-function game.keypressed(key)
-    if key == "escape" then
-        game.sceneManager.switch("menu")
-    end
-end
-
-return game
+return Game

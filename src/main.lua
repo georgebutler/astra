@@ -1,25 +1,27 @@
-local SceneManager = require "engine.scenemanager"
+local Config = require("config")
+local SceneManager = require("engine.scenemanager")
 
 function love.load()
-    -- Load individual scenes
-    local menuScene = require "scenes.menu"
-    local gameScene = require "scenes.game"
-    
-    -- Register scenes with SceneManager
-    SceneManager.register("menu", menuScene)
-    SceneManager.register("game", gameScene)
-    
-    SceneManager.switch("menu")
+	love.window.setMode(Config.WINDOW.WIDTH, Config.WINDOW.HEIGHT)
+	love.window.setTitle(Config.WINDOW.TITLE)
+
+	local MenuScene = require("scenes.menu")
+	local GameScene = require("scenes.game")
+
+	SceneManager:register("menu", MenuScene)
+	SceneManager:register("game", GameScene)
+
+	SceneManager:switch("menu")
 end
 
 function love.update(dt)
-    SceneManager.update(dt)
+	SceneManager:update(dt)
 end
 
 function love.draw()
-    SceneManager.draw()
+	SceneManager:draw()
 end
 
 function love.keypressed(key)
-    SceneManager.keypressed(key)
+	SceneManager:keypressed(key)
 end

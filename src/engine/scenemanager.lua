@@ -1,41 +1,47 @@
-local SceneManager = {
-    scenes = {},
-    currentScene = nil
-}
+local SceneManager = {}
 
-function SceneManager.register(name, scene)
-    SceneManager.scenes[name] = scene
-    if scene.init then scene.init(SceneManager) end
+function SceneManager:init()
+	self = setmetatable({}, { __index = SceneManager })
+	self.scenes = {}
+	self.currentScene = nil
+
+	return self
 end
 
-function SceneManager.switch(sceneName)
-    if SceneManager.scenes[sceneName] then
-        if SceneManager.currentScene and SceneManager.currentScene.unload then
-            SceneManager.currentScene.unload()
-        end
-        SceneManager.currentScene = SceneManager.scenes[sceneName]
-        if SceneManager.currentScene.load then
-            SceneManager.currentScene.load()
-        end
-    end
+function SceneManager:register(name, scene)
+	self.scenes[name] = scene
 end
 
-function SceneManager.update(dt)
-    if SceneManager.currentScene and SceneManager.currentScene.update then
-        SceneManager.currentScene.update(dt)
-    end
+function SceneManager:switch(sceneName)
+	if self.scenes[sceneName] then
+		if self.currentScene and self.currentScene.unload then
+			self.currentScene:unload()
+		end
+
+		self.currentScene = self.scenes[sceneName].new(self)
+
+		if self.currentScene.load then
+			self.currentScene:load()
+		end
+	end
 end
 
-function SceneManager.draw()
-    if SceneManager.currentScene and SceneManager.currentScene.draw then
-        SceneManager.currentScene.draw()
-    end
+function SceneManager:update(dt)
+	if self.currentScene then
+		self.currentScene:update(dt)
+	end
 end
 
-function SceneManager.keypressed(key)
-    if SceneManager.currentScene and SceneManager.currentScene.keypressed then
-        SceneManager.currentScene.keypressed(key)
-    end
+function SceneManager:draw()
+	if self.currentScene then
+		self.currentScene:draw()
+	end
 end
 
-return SceneManager
+function SceneManager:keypressed(key)
+	if self.currentScene then
+		self.currentScene:keypressed(key)
+	end
+end
+
+return SceneManager:init()
