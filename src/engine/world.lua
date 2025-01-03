@@ -8,17 +8,17 @@ function World.new()
 	self.tilemap = {}
 	self.seed = love.math.random(-100.0, 100.0)
 
-	local scale = 1 / (Config.TILES.SIZE * 2)
-	local maxHeight = math.floor(Config.WORLD.SIZE / 2)
+	local scale = 1 / (Config.TILES.SIZE * 64)
+	local maxHeight = math.floor(Config.WORLD.SIZE.HEIGHT / 2)
 
-	for x = 1, Config.WORLD.SIZE do
+	for x = 1, Config.WORLD.SIZE.WIDTH do
 		self.tilemap[x] = {}
 
 		local noiseValue = love.math.noise(x * scale, self.seed)
 		local height = math.floor(noiseValue * maxHeight)
 
-		for y = 1, Config.WORLD.SIZE do
-			if y > Config.WORLD.SIZE - height then
+		for y = 1, Config.WORLD.SIZE.HEIGHT do
+			if y > Config.WORLD.SIZE.HEIGHT - height then
 				self.tilemap[x][y] = 1
 			else
 				self.tilemap[x][y] = 0

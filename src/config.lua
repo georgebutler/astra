@@ -1,14 +1,17 @@
 local Config = {
 	WINDOW = {
-		WIDTH = 800,
-		HEIGHT = 600,
+		WIDTH = 1600,
+		HEIGHT = 1200,
 		TITLE = "Astra",
 	},
 	WORLD = {
-		SIZE = 32,
+		SIZE = {
+			WIDTH = 1024,
+			HEIGHT = 128,
+		},
 	},
 	TILES = {
-		SIZE = 8,
+		SIZE = 2,
 	},
 }
 

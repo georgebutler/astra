@@ -15,12 +15,4 @@ function Scene:keypressed(key) end
 function Scene:load() end
 function Scene:unload() end
 
-function Scene:attachCamera()
-	self.camera:attach()
-end
-
-function Scene:detachCamera()
-	self.camera:detach()
-end
-
 return Scene
