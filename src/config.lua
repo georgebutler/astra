@@ -2,7 +2,10 @@ local Config = {
 	WINDOW = {
 		WIDTH = 800,
 		HEIGHT = 600,
-		TITLE = "Game",
+		TITLE = "Astra",
+	},
+	WORLD = {
+		SIZE = 128,
 	},
 	TILES = {
 		SIZE = 8,

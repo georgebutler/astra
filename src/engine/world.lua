@@ -5,14 +5,15 @@ World.__index = World
 
 function World.new()
 	local self = setmetatable({}, World)
+	self.tilemap = {}
 
-	self.tilemap = {
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 1, 1, 1, 1, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	}
+	for x = 1, Config.WORLD.SIZE do
+		self.tilemap[x] = {}
+
+		for y = 1, Config.WORLD.SIZE do
+			self.tilemap[x][y] = 1
+		end
+	end
 
 	return self
 end
@@ -22,13 +23,13 @@ function World:update(dt)
 end
 
 function World:draw()
-	for i, row in ipairs(self.tilemap) do
-		for j, tile in ipairs(row) do
+	for x, row in ipairs(self.tilemap) do
+		for y, tile in ipairs(row) do
 			if tile == 1 then
 				love.graphics.rectangle(
-					"line",
-					j * Config.TILES.SIZE,
-					i * Config.TILES.SIZE,
+					"fill",
+					x * Config.TILES.SIZE,
+					y * Config.TILES.SIZE,
 					Config.TILES.SIZE,
 					Config.TILES.SIZE
 				)
