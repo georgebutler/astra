@@ -5,7 +5,7 @@ local Config = {
 		TITLE = "Astra",
 	},
 	WORLD = {
-		SIZE = 128,
+		SIZE = 32,
 	},
 	TILES = {
 		SIZE = 8,
